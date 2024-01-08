@@ -1,0 +1,132 @@
+/* Container styles */
+body {
+  margin: 0; /* Remove default body margin */
+  background-color: #bba67a; /* Dark background color */
+  font-family: 'Arial', sans-serif;
+}
+
+.container {
+  max-width: 70%; /* Adjust to occupy 70% of the page width */
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Header styles */
+.header {
+  background-color: #262626; /* Slightly lighter background color */
+  padding: 15px;
+  border-radius: 5px;
+  color: #fff; /* White text color in the header */
+}
+
+.user-info {
+  text-align: left;
+}
+
+h1 {
+  margin: 0;
+  color: white;
+}
+
+.username-icon {
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Button container styles */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Center buttons with space around them */
+  margin-top: 20px; /* Adjust top margin to leave at least 20% space after the header */
+}
+
+/* Button styles */
+button {
+  flex: 0 0 calc(30% - 20px); /* Adjust button width */
+  margin: 10px;
+  padding: 30px 40px; /* Increase button size */
+  font-size: 20px; /* Increase font size */
+  cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 10px; /* Increase border radius for a rounded appearance */
+  transition: background-color 0.3s ease;
+}
+
+/* Increase spacing between button rows */
+.button-container button:nth-child(3n + 1) {
+  margin-top: 20px;
+}
+
+/* Increase distance between first row and second row */
+.button-container button:nth-child(n + 4) {
+  margin-top: 20px;
+}
+
+/* Ensure 3 buttons in one line for larger screens */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 70%; /* Adjust to occupy 70% of the page width */
+    padding: 20px 40px; /* Adjust padding for larger screens */
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-info {
+    flex: 1;
+    text-align: left;
+  }
+
+  .button-container {
+    flex: 2;
+    margin-top: 85px; /* Adjust top margin to leave at least 20% space after the header */
+  }
+
+  button {
+    flex-basis: calc(30% - 20px); /* Adjust button width */
+    padding: 30px 40px; /* Increase button size */
+    font-size: 20px; /* Increase font size */
+  }
+
+  /* Increase spacing between button rows for larger screens */
+  .button-container button:nth-child(3n + 1) {
+    margin-top: 10px;
+  }
+
+  /* Increase distance between first row and second row for larger screens */
+  .button-container button:nth-child(n + 4) {
+    margin-top: 50px;
+  }
+  .logout-options {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .logout-options p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+  }
+  
+  .logout-options button {
+    padding: 10px;
+    margin: 10px, 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: green
+  }
+  
+}

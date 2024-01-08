@@ -1,0 +1,47 @@
+/* GiveFeedback.css */
+.feedback-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1.5rem;
+    width: 600px;
+    background-color: white;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .options-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+  }
+  
+  .radio-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-label input {
+    margin-right: 5px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  button {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
