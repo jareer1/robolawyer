@@ -1,55 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import './StyleViewFeedback.css';
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { getDatabase, ref, onValue } from "firebase/database";
 
-const FeedbackPage = () => {
-  // Sample feedback data
-  const feedbackData = [
-    { id: 1, user: 'User1', feedback: 'Great experience!' },
-    { id: 2, user: 'User2', feedback: 'Very helpful service.' },
-    { id: 3, user: 'User3', feedback: 'Could be improved.' },
-  ];
-
+const ViewFeedback = () => {
+  const navigate = useNavigate();
+  const [usersWithFeedback, setUsersWithFeedback] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [feedbackData, setFeedbackData] = useState({});
+  const db = getDatabase();
 
-  const handleViewFeedback = (userId) => {
-    // Set the selected user for viewing feedback
-    setSelectedUser(userId);
-  };
+  // Fetch the list of users who have given feedback
+  useEffect(() => {
+    const feedbackRef = ref(db, "feedback");
+    onValue(feedbackRef, (snapshot) => {
+      const feedbackData = snapshot.val();
+      if (feedbackData) {
+        const users = Object.keys(feedbackData);
+        setUsersWithFeedback(users);
+      }
+    });
+  }, [db]);
 
   const handleCloseFeedback = () => {
-    // Clear the selected user when closing feedback
     setSelectedUser(null);
+  };
+
+  const handleUserClick = (user) => {
+    setSelectedUser(user);
+
+    // Retrieve feedback data for the selected user
+    const userFeedbackRef = ref(db, `feedback/${user}`);
+    onValue(userFeedbackRef, (snapshot) => {
+      const data = snapshot.val();
+      setFeedbackData(data || {});
+    });
   };
 
   return (
     <div className="FeedbackPage">
       <h1>Feedback Viewer</h1>
-
-      {/* List of users with "View" button */}
-      <ul>
-        {feedbackData.map((feedback) => (
-          <li key={feedback.id}>
-            {feedback.user} -{' '}
-            <button onClick={() => handleViewFeedback(feedback.id)}>View</button>
-          </li>
-        ))}
-      </ul>
+      <div className="user-list">
+        <ul>
+          {usersWithFeedback.map((user) => (
+            <li key={user}>
+              <div className="user-row">
+                <h3>{user}</h3>
+                <button onClick={() => handleUserClick(user)}>View</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* Modal for viewing feedback */}
       {selectedUser !== null && (
         <div className="FeedbackModal">
           <div className="ModalContent">
-            <h2>{feedbackData[selectedUser - 1].user}'s Feedback</h2>
-            <p>{feedbackData[selectedUser - 1].feedback}</p>
+            <h3>{selectedUser}'s Feedback</h3>
+            <p>Rating: {feedbackData.Option}</p>
+            <p>Suggestions: {feedbackData.Suggestions}</p>
             <button onClick={handleCloseFeedback}>Close</button>
           </div>
         </div>
       )}
-            <Link to="/AdminHomepage">Back to AdminHomepage</Link>
-
+      <Link to="/AdminHomepage">Back to Admin Homepage</Link>
     </div>
   );
 };
 
-export default FeedbackPage;
+export default ViewFeedback;

@@ -1,35 +1,45 @@
 import React, { useState } from 'react';
-
+import { getAuth } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
-const DeactivateAccountPage = () => {
-    const [confirmationVisible, setConfirmationVisible] = useState(false);
-    const navigate = useNavigate()
-    const handleDeactivateAccount = () => {
-        setConfirmationVisible(true);
-    };
 
-    const handleConfirmation = (confirmed) => {
-        if (confirmed) {
+const DeleteUser = () => {
+    
+  const navigate = useNavigate()
+  const auth = getAuth();
+  const [isDeactivated, setIsDeactivated] = useState(false);
+  const [error, setError] = useState(null);
 
-            navigate('/')
-        }
-        setConfirmationVisible(false);
-    };
+  const handleDeactivateAccount = () => {
+    const user = auth.currentUser;
 
-    return (
-        <div className="deactivate-account-page">
-            <h1>Deactivate Account Page</h1>
-            <button onClick={handleDeactivateAccount}>Deactivate Account</button>
+    if (user) {
+      user
+        .delete()
+        .then(() => {
+          // User account successfully deleted
+          setIsDeactivated(true);
+        })
+        .catch((error) => {
+          // An error occurred
+          setError(error.message);
+        });
+    } else {
+      setError("No user is currently signed in.");
+    }
+    alert("Account Deactivated!")
+    navigate("/Login");
+  };
 
-            {confirmationVisible && (
-                <div className="confirmation-dialog">
-                    <p>Are you sure you want to deactivate your account?</p>
-                    <button onClick={() => handleConfirmation(true)}>Yes</button>
-                    <button onClick={() => handleConfirmation(false)}>No</button>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      <h2>Account Deactivation</h2>
+      <p>Are you sure you want to deactivate your account?</p>
+        <>
+          <button onClick={handleDeactivateAccount}>Deactivate Account</button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </>
+    </div>
+  );
 };
 
-export default DeactivateAccountPage;
+export default DeleteUser;

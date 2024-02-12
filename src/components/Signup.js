@@ -41,6 +41,10 @@ const Signup = () => {
       setMessage('occupation cannot be null')
       return
     }
+    if(password.length<6){
+      setMessage('password cannot be less than 6')
+      return
+    }
     console.log('jareer here')
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -67,7 +71,7 @@ const Signup = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error)
-        alert("Failed to Sign Up!!");
+        alert("Failed to Sign Up!!.Email already exists");
         
       });
 

@@ -6,13 +6,14 @@ import { auth } from '../Firebase/firebaseconfig'
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const LoginForm = () => {
+  
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
   const [message, setMessage] = useState('');
   const db = getDatabase();
-
+    
   const handleLogin = (e) => {
     if(username==''){
       setMessage('username cannot be null')
@@ -22,6 +23,15 @@ const LoginForm = () => {
       setMessage('password cannot be null')
       return
     }
+    if(role=='admin'){
+      if(password=='admin'&& username=='admin'){
+      navigate("/AdminHomepage");
+      }
+      else{
+        alert('username or password is not correct')
+      }
+    }
+    else{
     e.preventDefault();
     signInWithEmailAndPassword(auth, username, password)
         .then((userCredential) => {
@@ -30,15 +40,11 @@ const LoginForm = () => {
           const starCountRef = ref(db, 'users/' + user.uid);
           onValue(starCountRef, (snapshot) => {
               const data = snapshot.val();
-
-
-              // Cache data locally
-              localStorage.setItem('City', data['City'])
-              localStorage.setItem('Country', data['Country'])
+              localStorage.setItem('Username', data['Username'])
+              localStorage.setItem('Occupation', data['Occupation'])
               localStorage.setItem('address', data['address'])
               localStorage.setItem('person_email', data['person_email'])
-              localStorage.setItem('person_name', data['person_name'])
-              localStorage.setItem('zip_code', data['zip_code'])
+
               alert("Login Successfull!!");
               navigate("/UserHomepage");
           });
@@ -47,10 +53,10 @@ const LoginForm = () => {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          alert("Failed to Login!!");
+          alert(error.message);
         });
    
-    
+      }
 
   };
 

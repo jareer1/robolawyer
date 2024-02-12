@@ -1,26 +1,45 @@
 import React, { useState } from 'react';
 import './ChangePassword.css'; // Import the CSS file for styling
 import { useNavigate} from "react-router-dom";
+import { getAuth, reauthenticateWithCredential, updatePassword, EmailAuthProvider } from "firebase/auth";
+
 const ChangePassword = () => {
-  const navigate=useNavigate()
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+
   const handleChangePassword = () => {
-    const storedPassword = 'a123';
-    if (oldPassword !== storedPassword) {
-      setMessage('Old password is incorrect.');
-      return;
-    }
+    const storedEmail = localStorage.getItem('person_email');
+    console.log(storedEmail,oldPassword)
+    const credential = EmailAuthProvider.credential(storedEmail, oldPassword);
+  
+    reauthenticateWithCredential(user, credential)
+      .then(() => {
+        if (newPassword !== confirmPassword) {
+          setMessage('New password and confirm password do not match.');
+          return;
+        }
 
-    if (newPassword !== confirmPassword) {
-      setMessage('New password and confirm password do not match.');
-      return;
-    }
-
-    setMessage('Password changed successfully!');
-    navigate('/UserHomepage')
+        updatePassword(user, newPassword)
+          .then(() => {
+            setMessage('Password changed successfully!');
+            navigate('/UserHomepage');
+            console.log("Password updated successfully");
+          })
+          .catch((error) => {
+            console.log(error);
+            setMessage('Error updating password. Please try again.');
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        setMessage('Old password is incorrect.');
+      });
   };
 
   return (
@@ -45,5 +64,6 @@ const ChangePassword = () => {
     </div>
   );
 };
+
 
 export default ChangePassword;

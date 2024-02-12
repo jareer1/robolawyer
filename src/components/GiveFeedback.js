@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import './GiveFeedback.css'; // Import the CSS file for styling
+import React, { useState, useEffect } from 'react';
+import './GiveFeedback.css';
 import { useNavigate } from 'react-router-dom';
+import { getDatabase, ref, set } from "firebase/database";
+
 const GiveFeedback = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('');
   const [suggestions, setSuggestions] = useState('');
+  const db = getDatabase();
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -14,10 +17,22 @@ const GiveFeedback = () => {
     setSuggestions(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log('Selected Option:', selectedOption);
-    console.log('Suggestions:', suggestions);
-    navigate('/UserHomepage')
+  const storedUsername = localStorage.getItem('Username');
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+      set(ref(db, 'feedback/'+ storedUsername), {
+        Username: storedUsername,
+        Option: selectedOption,
+        Suggestions: suggestions,
+        })
+        .then(() => {
+          localStorage.setItem('Username', storedUsername)
+          localStorage.setItem('Option', selectedOption)
+          localStorage.setItem('Suggestions', suggestions)
+          alert("Feedback Saved Successfully!");
+          navigate("/Userhomepage");
+        });
   };
 
   return (
