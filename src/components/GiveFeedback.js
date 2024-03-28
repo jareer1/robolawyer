@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './GiveFeedback.css';
 import { useNavigate } from 'react-router-dom';
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set,push } from "firebase/database";
 
 const GiveFeedback = () => {
   const navigate = useNavigate();
@@ -21,11 +21,14 @@ const GiveFeedback = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-      set(ref(db, 'feedback/'+ storedUsername), {
+    const feedRef = ref(db, 'feedback/'+ storedUsername)
+    const newPostRef = push(feedRef);
+      set(newPostRef, {
         Username: storedUsername,
         Option: selectedOption,
         Suggestions: suggestions,
-        })
+        },
+        { merge: false })
         .then(() => {
           localStorage.setItem('Username', storedUsername)
           localStorage.setItem('Option', selectedOption)

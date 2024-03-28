@@ -7,7 +7,7 @@
   }
   
   .form-container {
-    width: 300px;
+    width: 400px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
@@ -31,7 +31,7 @@
     border-radius: 5px;
   }
   
-  button {
+  .buttonlogin{
     background-color: #4caf50;
     color: white;
     padding: 10px;
@@ -41,7 +41,7 @@
     width: 100%;
   }
   
-  button:hover {
+  .buttonlogin:hover {
     background-color: #45a049;
   }
   
