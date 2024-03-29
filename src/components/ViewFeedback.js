@@ -7,7 +7,7 @@ const ViewFeedback = () => {
   const navigate = useNavigate();
   const [usersWithFeedback, setUsersWithFeedback] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [feedbackData, setFeedbackData] = useState({});
+  const [feedbackData, setFeedbackData] = useState([]);
   const db = getDatabase();
 
   // Fetch the list of users who have given feedback
@@ -24,6 +24,7 @@ const ViewFeedback = () => {
 
   const handleCloseFeedback = () => {
     setSelectedUser(null);
+    setFeedbackData([]);
   };
 
   const handleUserClick = (user) => {
@@ -33,33 +34,49 @@ const ViewFeedback = () => {
     const userFeedbackRef = ref(db, `feedback/${user}`);
     onValue(userFeedbackRef, (snapshot) => {
       const data = snapshot.val();
-      setFeedbackData(data || {});
+      if (data) {
+        const feedbackArray = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        setFeedbackData(feedbackArray);
+      } else {
+        setFeedbackData([]);
+      }
     });
   };
 
   return (
     <div className="FeedbackPage">
       <h1>Feedback Viewer</h1>
-      <div className="user-list">
-        <ul>
+      <table className="feedback-table">
+        <thead>
+          <tr>
+            <th className="username-column">Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
           {usersWithFeedback.map((user) => (
-            <li key={user}>
-              <div className="user-row">
-                <h3>{user}</h3>
-                <button onClick={() => handleUserClick(user)}>View</button>
-              </div>
-            </li>
+            <tr key={user}>
+              <td><h2>{user}'s Feedback</h2></td>
+              <td><button onClick={() => handleUserClick(user)}>View</button></td>
+            </tr>
           ))}
-        </ul>
-      </div>
+        </tbody>
+      </table>
+
 
       {/* Modal for viewing feedback */}
       {selectedUser !== null && (
         <div className="FeedbackModal">
           <div className="ModalContent">
-            <h3>{selectedUser}'s Feedback</h3>
-            <p>Rating: {feedbackData.Option}</p>
-            <p>Suggestions: {feedbackData.Suggestions}</p>
+            <h3 className="feedbackmodalname">{selectedUser}'s Feedback</h3>
+            {feedbackData.map((feedback, index) => (
+              <div key={index}>
+                <p><strong>Feedback {index + 1}:</strong></p>
+                <p>Rating: {feedback.Option}</p>
+                <p>Suggestions: {feedback.Suggestions}</p>
+                {index !== feedbackData.length - 1 && <hr />} {/* Add a horizontal line between feedbacks */}
+              </div>
+            ))}
             <button onClick={handleCloseFeedback}>Close</button>
           </div>
         </div>

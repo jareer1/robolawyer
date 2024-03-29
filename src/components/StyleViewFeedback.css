@@ -53,10 +53,36 @@ button:hover {
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
+  width: 80%; 
+  max-width: 400px; /* Set a maximum width */
+  max-height: 80%; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds max-height */
 }
 
-.ModalContent h2 {
-  margin-top: 0;
+.feedback-table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc; /* Add border to the table */
+}
+
+.feedback-table th, .feedback-table td {
+  border: 1px solid #000000; /* Add border to table cells */
+  padding: 8px; /* Add padding to table cells */
+}
+
+.username-column {
+  width: 70%; /* Increase width of the username column */
+}
+
+.feedbackmodalname{
+  margin-bottom: 10px;
+}
+
+hr {
+  margin-top: 10px; /* Add space above the horizontal line */
+  margin-bottom: 10px; /* Add space below the horizontal line */
 }
 
 .ModalContent button {

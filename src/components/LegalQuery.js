@@ -50,7 +50,7 @@ const LegalQueryPage = () => {
 
   return (
     <div className="LegalQueryPage">
-      <h1>Legal Query Submission</h1>
+      <h1 className="legalheading">Legal Query Submission</h1>
       
       <textarea
         placeholder="Enter your legal query..."
@@ -66,7 +66,9 @@ const LegalQueryPage = () => {
       )}
   
       <button onClick={handleSubmit}>Submit</button>
-      <Link to="/UserHomepage">Back to UserHomepage</Link>
+      <div className="LinkWrapper">
+        <Link to="/UserHomepage">Back to UserHomepage</Link>
+      </div>
   
       {response && (
         <div className="ResponseArea">
