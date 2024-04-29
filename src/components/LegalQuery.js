@@ -3,13 +3,15 @@ import './StyleLegalQuery.css';
 import { Link } from "react-router-dom";
 import { HfInference } from "@huggingface/inference";
 const { Pinecone } = require('@pinecone-database/pinecone');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+const genAI = new GoogleGenerativeAI('AIzaSyAEc-ruKjgE9t0kKdSNd2-Z7PWXCYCq2Bk');
 const LegalQueryPage = () => {
   const [userQuery, setUserQuery] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [response, setResponse] = useState('');
 
-  const hf = new HfInference(process.env.HF_TOKEN);
+  const hf = new HfInference('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');
   const pc = new Pinecone({
     apiKey: 'cb1134ce-4f02-41a6-a6a0-00a7e05e9c38'
   });
@@ -19,10 +21,12 @@ const LegalQueryPage = () => {
       setShowAlert(true);
     } else {
       try {
+        console.log(userQuery)
         const output = await hf.featureExtraction({
           model: "intfloat/e5-small-v2",
           inputs: userQuery,
         });
+        
 
         const index = pc.index('robolawyer');
 
@@ -32,9 +36,16 @@ const LegalQueryPage = () => {
           includeValues: false,
           includeMetadata: true,
         });
+        console.log(queryResponse.matches[0].metadata.text)
+        const responseData = queryResponse.matches[0].metadata.text;
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+        const prompt="user question is "+userQuery+" pakistani constitution states "+responseData+" handle this using your own knowledge and according to pakistani constitution.And summarize it so that a normal person can understand  "
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();      
+        console.log(text)
+        setResponse(text);
 
-        const responseData = queryResponse.matches[0].metadata;
-        setResponse(responseData);
       } catch (error) {
         console.error("Error during feature extraction:", error);
       }
@@ -73,7 +84,7 @@ const LegalQueryPage = () => {
       {response && (
         <div className="ResponseArea">
           <h2>Response:</h2>
-          <p>{response.input}</p>
+          <p>{response}</p>
         </div>
       )}
     </div>
