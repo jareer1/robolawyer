@@ -1,0 +1,57 @@
+.aboutus{
+    display: block;
+    padding: 20px;
+    height: auto;
+    background-color: black;
+  }
+  
+  .aboutus h2 {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .aboutus p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  /* Card styles */
+  .container-about {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .column-about {
+    flex: 1;
+    margin: 0 10px;
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Set flex direction to column */
+  }
+  
+  .card-about {
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1; /* Distribute remaining space equally among cards */
+    margin-bottom: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  @media screen and (max-width: 768px) {
+    .container-about {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .column-about {
+      max-width: 80%;
+      width: 400px;
+    }
+  }

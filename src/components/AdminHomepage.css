@@ -87,7 +87,7 @@ body {
   
     .button-container {
       flex: 2;
-      margin-top: 85px; /* Adjust top margin to leave at least 20% space after the header */
+      margin-top: 20px; /* Adjust top margin to leave at least 20% space after the header */
     }
   
     button {

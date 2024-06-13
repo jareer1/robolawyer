@@ -14,6 +14,7 @@ import LegalQuery from './components/LegalQuery'
 import ChangePasswordAdmin from './components/ChangePasswordAdmin'
 import DeactivateAccount from './components/DeactivateUser'
 import EditProfile from './components/EditProfile';
+import OurTeam from './components/OurTeam';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/ChangePasswordAdmin" element={<ChangePasswordAdmin />} />
           <Route path="/DeactivateAccount" element={<DeactivateAccount />} />
           <Route path="/EditProfile" element={<EditProfile />} />
+          <Route path="/OurTeam" element={<OurTeam/>}/>
 
 
         </Routes>

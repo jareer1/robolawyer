@@ -1,0 +1,78 @@
+.LegalQueryPage {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.Alert {
+  color: red;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.legalheading {
+  margin-bottom: 30px;
+}
+
+.LinkWrapper {
+  margin-bottom: 30px;
+}
+
+.user-bubble {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px 20px 0 20px;
+  margin-bottom: 10px;
+  margin-left: 300px;
+}
+
+.response-bubble {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 20px 20px 20px 0;
+  margin-bottom: 10px;
+  margin-right: 300px;
+}
+
+.search-box {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #f0f4f9;
+  padding: 10px 20px;
+  border-radius: 50px;
+  width: calc(100% - 550px); /* Adjust the width to fit the viewport */
+}
+
+.search-box img {
+  width: 24px;
+  cursor: pointer;
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 18px;
+}

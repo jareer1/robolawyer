@@ -1,0 +1,21 @@
+.row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .teamCol.teamCol {
+    height: auto ;
+  }
+  
+  .icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .rowhead{
+    margin-top: 20px;
+    text-align: center;
+    color: black;
+  }
